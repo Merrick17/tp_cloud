@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-student-deployment
+  name: hello-student-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-student
+  ports:
+   - name: http
+     protocol: TCP
+     port: 3000
+     type: NodePort
+  template:
+    metadata:
+      labels:
+        app: hello-student
+    spec:
+      containers:
+      - image: vgwdev/mpwin-test:latest
+        name: hello-student
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: "200Mi"
+            cpu: "250m"
+          requests:
+            memory: "100Mi"
+            cpu: "125m"
